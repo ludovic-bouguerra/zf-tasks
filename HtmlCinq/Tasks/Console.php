@@ -23,7 +23,7 @@
 
 		include_once 'BaseTask.php';
 		include_once 'TasksManager.php';
-		
+		include_once 'ConsoleHelper.php';
 			
 		// Define path to application directory
 		defined('APPLICATION_PATH')
@@ -58,13 +58,18 @@
 		
 		if ($argc >1){
 			
+			// Il faut concatener l'ensemble des paramètres --
+			
+			
 			$tasksManager->load($argv[1], null);
 		
 		}
 		else {
 			//-- In this case show all tasks --
-			$tasksManager->getHelp();
-						
+			$helpArray = $tasksManager->getHelp();
+			//-- On affiche le tableau --
+			ConsoleHelper::showHelp($helpArray);
 			
+					
 		}		
 	}

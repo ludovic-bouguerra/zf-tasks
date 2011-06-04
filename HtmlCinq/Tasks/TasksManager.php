@@ -70,13 +70,20 @@
 				$this->listTask($path, $result);
 				
 				print_r($result);
-				
+				return $result;
+												
 			}
 			
 		}
 		
-		
-		protected function listTask($path, $result){
+		/**
+		 * 
+		 * 
+		 * Enter description here ...
+		 * @param unknown_type $path
+		 * @param unknown_type $result
+		 */
+		protected function listTask($path, &$result){
 			
 			
 			if (is_dir($path)){
@@ -90,7 +97,15 @@
 	
 				    	
 				    	if($file != ".." && $file != "."){
-				    		$this->listTask($path.$file, $result);
+							
+				    		$infoFile = pathinfo($file);
+				    		$filename = $infoFile["filename"];			    		
+				    		
+				    		if (!isset ($result[$filename])){
+				    			$result[$filename] = "";
+				    		}
+				    		
+				    		$this->listTask($path.$file, $result[$filename]);
 				       }
 				       
 				    }
@@ -105,19 +120,20 @@
 				if (is_file($path)){
 					
 					//-- On récupére les informations sur le fichier
-					$result = pathinfo($path);
+					$infoFile = pathinfo($path);
 					//-- On rajoute le "." pour pouvoir comparer avec la constante de la classe.
 					
-					if (".".$result["extension"] == self::TASK_EXTENSION){
+					if (".".$infoFile["extension"] == self::TASK_EXTENSION){
 						include_once $path;
 						
-						$className = $result["filename"];
+						$className = $infoFile["filename"];
 						
 						if ($this->isValidTask($className)){
 							//-- On récupére l'information sur l'aide de cette tache --
 							
 							$task = new $className();
-							echo $task->getDescription();
+
+							$result = $task->getDescription();
 							
 						}
 					}
