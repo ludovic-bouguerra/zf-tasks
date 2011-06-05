@@ -60,8 +60,13 @@
 			
 			// Il faut concatener l'ensemble des paramètres --
 			
+			$args = null;
+			if ($argc > 2){
+				$args = array_slice($argv, 2);
+							
+			}
 			
-			$tasksManager->load($argv[1], null);
+			$tasksManager->load($argv[1], $args);
 		
 		}
 		else {

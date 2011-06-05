@@ -69,7 +69,6 @@
 				$result = array();
 				$this->listTask($path, $result);
 				
-				print_r($result);
 				return $result;
 												
 			}
