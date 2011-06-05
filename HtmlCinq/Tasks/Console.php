@@ -50,11 +50,17 @@
 		$application = new Zend_Application(
 		    APPLICATION_ENV,
 		    APPLICATION_PATH . '/configs/application.ini'
+		
 		);
+		
+		$application->bootstrap();
+		
 		
 		
 		$tasksManager = new TasksManager();
 		$tasksManager->addPath(TASKS_USER_PATH);
+		
+		
 		
 		if ($argc >1){
 			
